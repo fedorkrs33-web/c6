@@ -1,0 +1,17 @@
+# Исключить временные, системные и служебные файлы
+*.log
+*.tmp
+*.bak
+node_modules/
+dist/
+build/
+.git/
+.gitignore
+.idea/
+desktop.ini
+Thumbs.db
+.DS_Store
+.vscode/
+terminals/
+
+
