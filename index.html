@@ -21,6 +21,41 @@
             padding: 20px;
         }
 
+        body.light-theme {
+            background: linear-gradient(135deg, #ece9e6 0%, #ffffff 100%);
+        }
+        body.light-theme .calculator {
+            background: #ffffff;
+            color: #222;
+        }
+        body.light-theme .display {
+            background: #ededed;
+            color: #222;
+        }
+        body.light-theme button {
+            background: #f9f9f9;
+            color: #333;
+        }
+        body.light-theme .operator {
+            background: #9ecbff;
+            color: #fff;
+        }
+        body.light-theme .equals {
+            background: #98c3d9;
+            color: #fff;
+        }
+        body.light-theme .clear {
+            background: #ffa5a5;
+            color: #fff;
+        }
+        body.light-theme button:hover, body.light-theme .operator:hover, body.light-theme .equals:hover, body.light-theme .clear:hover {
+            filter: brightness(0.95);
+        }
+        /* Тёмная тема (основная) */
+        body.dark-theme {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
         .calculator {
             background: #ffffff;
             border-radius: 20px;
@@ -107,7 +142,10 @@
         }
     </style>
 </head>
-<body>
+<body class="dark-theme">
+    <div style="position: absolute; right: 20px; top: 20px;">
+        <button id="theme-toggle" onclick="toggleTheme()" style="padding: 10px 18px; border-radius: 999px; font-size: 1rem; font-weight: bold; border: none; cursor: pointer; background: #222; color: #fff; transition: .2s;">🌙</button>
+    </div>
     <div class="calculator">
         <div class="display" id="display">0</div>
         <div class="buttons">
@@ -261,6 +299,24 @@
                 deleteLast();
             }
         });
+
+        // Тема
+        function applyTheme(theme) {
+            document.body.classList.remove('dark-theme', 'light-theme');
+            document.body.classList.add(theme+'-theme');
+            document.getElementById('theme-toggle').textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
+        function toggleTheme() {
+            let current = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+            let next = current === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('calc_theme', next);
+            applyTheme(next);
+        }
+        // Применяем тему при загрузке
+        (function() {
+            let saved = localStorage.getItem('calc_theme');
+            applyTheme(saved === 'light' ? 'light' : 'dark');
+        })();
     </script>
 </body>
 </html>
